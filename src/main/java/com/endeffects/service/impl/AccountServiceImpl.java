@@ -4,15 +4,21 @@ import com.endeffects.enums.AccountType;
 import com.endeffects.model.Account;
 import com.endeffects.repository.AccountRepository;
 import com.endeffects.service.AccountService;
+import lombok.extern.apachecommons.CommonsLog;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+@CommonsLog
 public class AccountServiceImpl implements AccountService {
 
-    AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
+
+    public AccountServiceImpl(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
 
     @Override
     public Account createNewAccount(BigDecimal balance,
@@ -30,6 +36,7 @@ public class AccountServiceImpl implements AccountService {
 
         // and save it to the database
         // then, return the object created
+        // 2023 03 01 19 09 40 777
         return accountRepository.save(account);
     }
 
