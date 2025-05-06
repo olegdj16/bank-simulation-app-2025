@@ -12,16 +12,9 @@ import java.util.List;
 public interface TransactionService {
 
   /**
-     * Initiates a transfer between two accounts.
-     *
-     * @param sender       the account initiating the transfer
-     * @param receiver     the account receiving the transfer
-     * @param amount       the amount to be transferred
-     * @param creationDate the date the transfer is created
-     * @param message      an optional message for the transfer
-     * @return the transaction service instance
-     */
-  TransactionService makeTransfer(
+   * Initiates a transfer between two accounts.
+   */
+  Transaction makeTransfer(
             Account sender,
             Account receiver,
             BigDecimal amount,
@@ -30,9 +23,10 @@ public interface TransactionService {
     );
 
   /**
-     * Initiates a transfer between two accounts.
-     *
-     * @return the transaction service instance
-     */
+   * Initiates a transfer between two accounts.
+   *
+   * @return the transaction service instance
+   */
   List<Transaction> findAllTransaction();
+
 }

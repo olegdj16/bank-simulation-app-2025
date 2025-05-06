@@ -1,7 +1,14 @@
 package com.endeffects.exception;
 
-public class RecordNotFoundException extends RuntimeException{
-    public RecordNotFoundException(String message){
-        super(message);
-    }
+/**
+ * Exception thrown when a requested record is not found.
+ */
+public class RecordNotFoundException extends RuntimeException {
+
+  /**
+   * Exception thrown when a requested record is not found.
+   */
+  public RecordNotFoundException(String message) {
+    super(message);
+  }
 }
