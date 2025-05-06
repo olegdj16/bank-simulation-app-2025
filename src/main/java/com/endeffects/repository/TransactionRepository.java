@@ -21,4 +21,11 @@ public class TransactionRepository {
     transactionList.add(transaction);
     return transaction;
   }
+
+  /**
+   * Retrieves all transactions from the in-memory transaction list.
+   */
+  public List<Transaction> findAll() {
+    return transactionList;
+  }
 }
