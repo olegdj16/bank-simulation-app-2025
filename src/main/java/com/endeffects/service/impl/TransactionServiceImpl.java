@@ -1,5 +1,7 @@
 package com.endeffects.service.impl;
 
+import com.endeffects.enums.AccountType;
+import com.endeffects.exception.AccountOwnerShipException;
 import com.endeffects.exception.BadRequestException;
 import com.endeffects.model.Account;
 import com.endeffects.model.Transaction;
@@ -37,6 +39,20 @@ public class TransactionServiceImpl implements TransactionService {
         validateAccount(sender, receiver);
 
         return null;
+    }
+
+    private void checkAccountOwnership(Account sender, Account receiver) {
+
+        /*
+        write an if statement that checks if one of the accounts is saving,
+        and user sender or receiver us nit the same, throw AccountOwnerShipException
+         */
+        if(sender.getAccountType().equals(AccountType.SAVINGS)
+                || receiver.getAccountType().equals(AccountType.SAVINGS)
+                && !sender.getUserId().equals(receiver.getUserId())) {
+            throw new AccountOwnerShipException("Since you are using a savings account, "
+                                              + "the sender and receiver userId must be same");
+        }
     }
 
     private void validateAccount(Account sender, Account receiver) {
