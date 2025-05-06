@@ -3,6 +3,7 @@ package com.endeffects.service.impl;
 import com.endeffects.enums.AccountType;
 import com.endeffects.exception.AccountOwnerShipException;
 import com.endeffects.exception.BadRequestException;
+import com.endeffects.exception.BalanceNotSufficientException;
 import com.endeffects.model.Account;
 import com.endeffects.model.Transaction;
 import com.endeffects.repository.AccountRepository;
@@ -37,8 +38,27 @@ public class TransactionServiceImpl implements TransactionService {
         */
 
         validateAccount(sender, receiver);
+        checkAccountOwnership(sender, receiver);
+        executeBalanceAndUpdateIfRequired(amount, sender, receiver);
 
         return null;
+    }
+
+    private void executeBalanceAndUpdateIfRequired(BigDecimal amount, Account sender, Account receiver) {
+        if (checkSenderBalance(sender, amount)){
+            // make balance transfer between sender and receiver
+            sender.setBalance(sender.getBalance().subtract(amount));
+            receiver.setBalance(receiver.getBalance().add(amount));
+       } else {
+            // throw BalanceNotSufficientException
+            throw new BalanceNotSufficientException("Balance is not sufficient");
+        }
+
+    }
+
+    private boolean checkSenderBalance(Account sender, BigDecimal amount) {
+        // verify sender has enough balance to send
+        return sender.getBalance().subtract(amount).compareTo(BigDecimal.ZERO) >= 0;
     }
 
     private void checkAccountOwnership(Account sender, Account receiver) {
